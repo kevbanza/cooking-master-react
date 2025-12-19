@@ -4,8 +4,7 @@ import IngredientList from "./components/IngredientList"
 import {getRecipeFromChefClaude} from './js/ai'
 
 function MainPart(){
-    let [ingredientList, setIngredientList] =useState(['Eggs', "Rice", 'Chicken', 'Spinach']);
-    const basidx =['Eggs', "Rice", 'Chicken', 'Spinach'];
+    let [ingredientList, setIngredientList] =useState([]);
     const [theRecipe, setTheRecipe] = useState(null)
 
     
