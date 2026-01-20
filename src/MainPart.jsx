@@ -1,13 +1,27 @@
 import { useState } from "react";
+import { useEffect } from "react";
+import { useRef } from "react";
 import Recipe from "./components/Recipe"
 import IngredientList from "./components/IngredientList"
 import {getRecipeFromChefClaude} from './js/ai'
 
 function MainPart(){
-    let [ingredientList, setIngredientList] =useState([]);
-    const [theRecipe, setTheRecipe] = useState(null)
-
+    let [ingredientList, setIngredientList] =useState(['Eggs', "Rice", 'Chicken', 'Spinach']);
+    const basidx =['Eggs', "Rice", 'Chicken', 'Spinach'];
+    const [theRecipe, setTheRecipe] = useState("")  // "" and not NULL
+    const [isLoading, setIsLoading] = useState(false);
+    const recipeSection = useRef(null)
     
+
+    useEffect(() => function (){
+        if(theRecipe !== null && recipeSection.current !== null){
+            recipeSection.current.scrollIntoView({behavior: "smooth"});
+            console.log(theRecipe);
+            console.log("here");
+        }
+    }, [theRecipe])
+
+
     function addIngredientToForm(formData){
         const value = formData.get("ingredient_input")
         if (ingredientList.includes(value)) {
@@ -18,9 +32,11 @@ function MainPart(){
     }
  
     async function getRecipe(){
-        const recipeFromAi= await getRecipeFromChefClaude(ingredientList);
-        console.log(recipeFromAi);
+        setIsLoading(true);
+        const recipeFromAi = await getRecipeFromChefClaude(ingredientList);
+       // console.log(recipeFromAi);
         setTheRecipe(recipeFromAi);
+        setIsLoading(false);
     }
 
 
@@ -52,7 +68,7 @@ function MainPart(){
                 }
 
                 {ingredientList.length > 3 &&
-                    <Recipe theRecipe={theRecipe} />
+                    (isLoading ? <p>Loading...</p> : <Recipe theRecipe={theRecipe} ref={recipeSection} />)
                 }
         </div>
     </>  

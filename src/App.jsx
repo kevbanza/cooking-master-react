@@ -7,11 +7,12 @@ import MainPart from './MainPart'
 
 
 function App() {
+  
   return (
     <>
     <main>
-        <div class="row">
-            <div class="col-lg-6 mx-auto">
+        <div className="row">
+            <div className="col-lg-6 mx-auto">
               <Header />
               <MainPart />
             </div>

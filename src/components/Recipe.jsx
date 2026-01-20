@@ -4,7 +4,7 @@ export default function(props){
     return (   
         <>
             {props.theRecipe && 
-                <div className="text-start">
+                <div className="text-start" ref={props.ref}>
                     <Markdown>{props.theRecipe}</Markdown>
                 </div>
             }
